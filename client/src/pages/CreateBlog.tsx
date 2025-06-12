@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent, type FormEvent } from "react";
+import React, { useState, type ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { CreateBlogPost } from "../redux/thunks/blogThunk";
 type FormDataType = {
