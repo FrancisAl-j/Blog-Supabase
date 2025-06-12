@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root {
+  --background: #2c2c2c;
+  --text: #eeeeee;
+  --main-container: min(100% - 20px, 1400px);
+  --form-container: min(100% - 20px, 700px);
+  --form-label: clamp(1rem, 3vw, 2rem);
+  --title: clamp(2.5rem, 5vw, 4rem);
+  --logo: clamp(1.5rem, 3vw, 2rem);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-container {
+  width: var(--main-container);
+  margin: auto;
+}
+
+.form-container {
+  width: var(--form-container);
+}
+
+.label {
+  font-size: var(--form-label);
+}
+
+.title {
+  font-size: var(--title);
+}
+
+.logo {
+  font-size: var(--logo);
+}
