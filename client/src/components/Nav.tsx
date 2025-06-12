@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/Hooks";
 
 const Nav = () => {
+  const { session } = useAppSelector((state) => state.auth);
+
   return (
     <header className="w-full">
       <nav className="main-container flex justify-between py-4">
@@ -15,9 +18,13 @@ const Nav = () => {
             <li>Create Blogs</li>
           </Link>
 
-          <Link to="signin">
-            <li>Sign in</li>
-          </Link>
+          {session ? (
+            <li className="text-red-600 cursor-pointer">Logout</li>
+          ) : (
+            <Link to="signin">
+              <li>Sign in</li>
+            </Link>
+          )}
         </ul>
       </nav>
     </header>

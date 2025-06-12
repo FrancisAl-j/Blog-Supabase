@@ -7,11 +7,13 @@ import { GetBlogs } from "./redux/thunks/blogThunk";
 import Nav from "./components/Nav";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
+import { CheckAuth } from "./redux/thunks/authThunks";
 
 const App = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(GetBlogs());
+    dispatch(CheckAuth());
   }, [dispatch]);
 
   useEffect(() => {}, []);

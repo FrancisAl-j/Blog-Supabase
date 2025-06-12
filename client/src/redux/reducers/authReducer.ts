@@ -45,34 +45,34 @@ export const authSlice = createSlice({
     });
 
     // Sign in / Login
-    builder.addCase(CheckAuth.pending, (state) => {
+    builder.addCase(SigninThunk.pending, (state) => {
       state.isSigningIn = true;
       state.session = null;
       state.signinErr = null;
     });
-    builder.addCase(CheckAuth.fulfilled, (state, action: any) => {
+    builder.addCase(SigninThunk.fulfilled, (state, action: any) => {
       state.isSigningIn = false;
       state.session = action.payload;
       state.signinErr = null;
     });
-    builder.addCase(CheckAuth.rejected, (state) => {
+    builder.addCase(SigninThunk.rejected, (state) => {
       state.isSigningIn = false;
       state.session = null;
       state.signinErr = "Sign up failed.";
     });
 
     // Check Authentication
-    builder.addCase(SigninThunk.pending, (state) => {
+    builder.addCase(CheckAuth.pending, (state) => {
       state.isChecking = true;
       state.session = null;
       state.signinErr = null;
     });
-    builder.addCase(SigninThunk.fulfilled, (state, action: any) => {
+    builder.addCase(CheckAuth.fulfilled, (state, action: any) => {
       state.isChecking = false;
       state.session = action.payload;
       state.signinErr = null;
     });
-    builder.addCase(SigninThunk.rejected, (state) => {
+    builder.addCase(CheckAuth.rejected, (state) => {
       state.isChecking = false;
       state.session = null;
       state.signinErr = "Sign up failed.";

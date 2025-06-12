@@ -10,7 +10,7 @@ type BlogType = {
 };
 
 const Blogs = () => {
-  const { blogs } = useAppSelector((state) => state.blog);
+  const { blogs, gettingBlogs } = useAppSelector((state) => state.blog);
   const [blogId, setBlogId] = useState<null | number>(null);
   const [updateId, setUpdateId] = useState<null | number>(null);
 
@@ -21,6 +21,14 @@ const Blogs = () => {
   const getUpdateId = (id: number) => {
     setUpdateId(id);
   };
+
+  if (gettingBlogs) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+      </div>
+    );
+  }
   return (
     <main>
       <h1 className="title text-[#2c2c2c] font-semibold">Blogs</h1>
