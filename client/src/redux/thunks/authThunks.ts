@@ -9,9 +9,11 @@ export const SignupThunk = createAsyncThunk(
   "auth/signup",
   async (formData: FormDataType, { rejectWithValue }) => {
     try {
-      const user = await auth.signup(formData);
-
-      return user;
+      const { session, error } = await auth.signup(formData);
+      if (error) {
+        return rejectWithValue(error || "Sign up failed.");
+      }
+      return session;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message || "Sign up failed.");
@@ -24,12 +26,15 @@ export const SigninThunk = createAsyncThunk(
   "auth/signin",
   async (formData: FormDataType, { rejectWithValue }) => {
     try {
-      const session = await auth.signin(formData);
+      const { session, error } = await auth.signin(formData);
 
+      if (error) {
+        return rejectWithValue(error || "Sign in failed.");
+      }
       return session;
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message || "Sign in failed.");
+    } catch (err) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message || "Sign in failed.");
       }
     }
   }

@@ -1,3 +1,4 @@
+import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../../supabase-client";
 
 type FormDataType = {
@@ -5,31 +6,35 @@ type FormDataType = {
   password: string;
 };
 
+type SigninResponse = {
+  session: Session | null;
+  error: string | undefined;
+};
+
 interface AuthType {
-  signup: (formData: FormDataType) => void;
-  signin: (formData: FormDataType) => void;
+  signup: (formData: FormDataType) => Promise<SigninResponse>;
+  signin: (formData: FormDataType) => Promise<SigninResponse>;
   checkAuth: () => void;
   logout: () => void;
   getUser: () => void;
 }
 
 export const auth: AuthType = {
-  signup: async (formData: FormDataType) => {
+  signup: async (formData: FormDataType): Promise<SigninResponse> => {
     try {
       const res = await supabase.auth.signUp(formData);
 
-      return res.data.user;
+      return { session: res.data.session, error: res.error?.message };
     } catch (error) {
       throw error;
     }
   },
 
-  signin: async (formData: FormDataType) => {
+  signin: async (formData: FormDataType): Promise<SigninResponse> => {
     try {
       const res = await supabase.auth.signInWithPassword(formData);
-      console.log(res.data.session);
 
-      return res.data.session;
+      return { session: res.data.session, error: res.error?.message };
     } catch (error) {
       throw error;
     }
@@ -38,7 +43,6 @@ export const auth: AuthType = {
   checkAuth: async () => {
     try {
       const res = await supabase.auth.getSession();
-      console.log(res.data.session);
 
       return res.data.session;
     } catch (error) {

@@ -6,7 +6,7 @@ import { SignupThunk } from "../redux/thunks/authThunks";
 const Signup = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isSigningUp } = useAppSelector((state) => state.auth);
+  const { isSigningUp, signupErr } = useAppSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -73,6 +73,11 @@ const Signup = () => {
             </Link>
           </p>
         </div>
+        {signupErr && (
+          <p className="text-[#eee] bg-red-950 border-l-10 border-red-700">
+            {signupErr}
+          </p>
+        )}
       </form>
     </main>
   );

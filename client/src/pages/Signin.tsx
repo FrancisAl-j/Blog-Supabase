@@ -1,11 +1,12 @@
 import React, { useState, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../redux/Hooks";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { SigninThunk } from "../redux/thunks/authThunks";
 
 const Signin = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { signinErr } = useAppSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -72,6 +73,11 @@ const Signin = () => {
             </Link>
           </p>
         </div>
+        {signinErr && (
+          <p className="text-[#eee] bg-red-950 border-l-10 border-red-700">
+            {signinErr}
+          </p>
+        )}
       </form>
     </main>
   );

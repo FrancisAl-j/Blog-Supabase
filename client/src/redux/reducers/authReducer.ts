@@ -15,6 +15,7 @@ type InitialStateType = {
   isChecking: boolean;
   signinErr: string | null;
   signupErr: string | null;
+  checkingErr: string | null;
 };
 
 const initialState: InitialStateType = {
@@ -25,6 +26,7 @@ const initialState: InitialStateType = {
   isChecking: false,
   signinErr: null,
   signupErr: null,
+  checkingErr: null,
 };
 
 export const authSlice = createSlice({
@@ -40,18 +42,18 @@ export const authSlice = createSlice({
     // Sign up / Register
     builder.addCase(SignupThunk.pending, (state) => {
       state.isSigningUp = true;
-      state.user = null;
+      state.session = null;
       state.signupErr = null;
     });
     builder.addCase(SignupThunk.fulfilled, (state, action: any) => {
       state.isSigningUp = false;
-      state.user = action.payload;
+      state.session = action.payload;
       state.signupErr = null;
     });
-    builder.addCase(SignupThunk.rejected, (state) => {
+    builder.addCase(SignupThunk.rejected, (state, action: any) => {
       state.isSigningUp = false;
-      state.user = null;
-      state.signupErr = "Sign up failed.";
+      state.session = null;
+      state.signupErr = action.payload;
     });
 
     // Sign in / Login
@@ -64,28 +66,30 @@ export const authSlice = createSlice({
       state.isSigningIn = false;
       state.session = action.payload;
       state.signinErr = null;
+      console.log("Running 2");
     });
-    builder.addCase(SigninThunk.rejected, (state) => {
+    builder.addCase(SigninThunk.rejected, (state, action: any) => {
       state.isSigningIn = false;
       state.session = null;
-      state.signinErr = "Sign up failed.";
+      state.signinErr = action.payload;
+      console.log("Running 3");
     });
 
     // Check Authentication
     builder.addCase(CheckAuth.pending, (state) => {
       state.isChecking = true;
       state.session = null;
-      state.signinErr = null;
+      state.checkingErr = null;
     });
     builder.addCase(CheckAuth.fulfilled, (state, action: any) => {
       state.isChecking = false;
       state.session = action.payload;
-      state.signinErr = null;
+      state.checkingErr = null;
     });
     builder.addCase(CheckAuth.rejected, (state) => {
       state.isChecking = false;
       state.session = null;
-      state.signinErr = "Sign up failed.";
+      state.checkingErr = "Checking authentication failed.";
     });
 
     // Getting User
