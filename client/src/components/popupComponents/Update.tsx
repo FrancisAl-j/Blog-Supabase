@@ -7,7 +7,7 @@ import React, {
 import { useAppDispatch } from "../../redux/Hooks";
 import { GetBlogs, UpdateBlog } from "../../redux/thunks/blogThunk";
 
-type FormDataType = {
+type UpdateData = {
   title: string;
   content: string;
 };
@@ -15,6 +15,7 @@ const Update = ({
   id,
   title,
   content,
+
   setUpdateId,
 }: {
   id: number;
@@ -23,10 +24,13 @@ const Update = ({
   setUpdateId: Dispatch<SetStateAction<number | null>>;
 }) => {
   const dispatch = useAppDispatch();
-  const [formData, setFormData] = useState<FormDataType>({
+  const [formData, setFormData] = useState<UpdateData>({
     title: title || "",
     content: content || "",
   });
+
+  const page = 1;
+  const limit = 6;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,7 +47,7 @@ const Update = ({
 
     if (UpdateBlog.fulfilled.match(result)) {
       setUpdateId(null);
-      dispatch(GetBlogs());
+      dispatch(GetBlogs({ page, limit }));
     }
   };
 

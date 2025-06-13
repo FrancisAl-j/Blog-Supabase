@@ -20,6 +20,9 @@ const CreateBlog = () => {
 
   const [blogImage, setBlogImage] = useState<File | null>(null);
 
+  const page = 1;
+  const limit = 6;
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -71,7 +74,7 @@ const CreateBlog = () => {
         content: "",
         user_id: user?.id,
       });
-      dispatch(GetBlogs());
+      dispatch(GetBlogs({ page, limit }));
     }
   };
 

@@ -7,6 +7,11 @@ type FormDataType = {
   image_url: string | null;
 };
 
+type UpdateData = {
+  title: string;
+  content: string;
+};
+
 type GetBlogsResponse = {
   data: any[] | null;
   total: number;
@@ -22,13 +27,7 @@ interface BlogsAPI {
     limit: number;
   }) => Promise<GetBlogsResponse>;
   deleteBlog: (id: number) => void;
-  updateBlog: ({
-    id,
-    formData,
-  }: {
-    id: number;
-    formData: FormDataType;
-  }) => void;
+  updateBlog: ({ id, formData }: { id: number; formData: UpdateData }) => void;
   getMyBlogs: (user_id: string) => void;
 }
 

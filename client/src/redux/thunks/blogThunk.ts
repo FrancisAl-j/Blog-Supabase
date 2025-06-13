@@ -8,6 +8,11 @@ type FormDataType = {
   image_url: string | null;
 };
 
+type UpdateType = {
+  title: string;
+  content: string;
+};
+
 type PageType = {
   page: number;
   limit: number;
@@ -60,7 +65,7 @@ export const DeleteBlog = createAsyncThunk(
 export const UpdateBlog = createAsyncThunk(
   "blog/update",
   async (
-    { id, formData }: { id: number; formData: FormDataType },
+    { id, formData }: { id: number; formData: UpdateType },
     { rejectWithValue }
   ) => {
     try {
