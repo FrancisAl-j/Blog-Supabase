@@ -1,7 +1,11 @@
-import { useState, type ChangeEvent } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, type ChangeEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../redux/Hooks";
+import { SigninThunk } from "../redux/thunks/authThunks";
 
 const Signin = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,9 +19,22 @@ const Signin = () => {
     });
   };
 
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const result = await dispatch(SigninThunk(formData));
+
+    if (SigninThunk.fulfilled.match(result)) {
+      navigate("/");
+    }
+  };
+
   return (
     <main className="main-container grid place-items-center h-[100svh]">
-      <form className="form-container border-[#eee] border-2 rounded-lg p-4 flex flex-col gap-4">
+      <form
+        onSubmit={handleSignin}
+        className="form-container border-[#eee] border-2 rounded-lg p-4 flex flex-col gap-4"
+      >
         <header>
           <h1 className="title font-extrabold text-center">Sign in</h1>
         </header>

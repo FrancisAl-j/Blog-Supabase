@@ -13,6 +13,7 @@ const Blogs = () => {
   const { blogs, gettingBlogs } = useAppSelector((state) => state.blog);
   const [blogId, setBlogId] = useState<null | number>(null);
   const [updateId, setUpdateId] = useState<null | number>(null);
+  console.log(blogs);
 
   const getId = (id: number) => {
     setBlogId(id);

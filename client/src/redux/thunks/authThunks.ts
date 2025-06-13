@@ -29,7 +29,7 @@ export const SigninThunk = createAsyncThunk(
       return session;
     } catch (error) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message || "Sign up failed.");
+        return rejectWithValue(error.message || "Sign in failed.");
       }
     }
   }
@@ -44,7 +44,39 @@ export const CheckAuth = createAsyncThunk(
       return session;
     } catch (error) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message || "Sign up failed.");
+        return rejectWithValue(
+          error.message || "Checking Authentication failed."
+        );
+      }
+    }
+  }
+);
+
+export const Logout = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await auth.logout();
+
+      return;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message || "Logout failed.");
+      }
+    }
+  }
+);
+
+export const GetUser = createAsyncThunk(
+  "auth/user",
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = await auth.getUser();
+
+      return user;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message || "Getting user failed.");
       }
     }
   }

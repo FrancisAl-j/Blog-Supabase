@@ -1,17 +1,20 @@
 import React, { useState, type ChangeEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { CreateBlogPost } from "../redux/thunks/blogThunk";
+import { CreateBlogPost, GetBlogs } from "../redux/thunks/blogThunk";
 type FormDataType = {
   title: string;
   content: string;
+  user_id: string | undefined;
 };
 
 const CreateBlog = () => {
   const dispatch = useAppDispatch();
   const { isBlogLoading } = useAppSelector((state) => state.blog);
+  const { user } = useAppSelector((state) => state.auth);
   const [formData, setFormData] = useState<FormDataType>({
     title: "",
     content: "",
+    user_id: user?.id,
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +34,9 @@ const CreateBlog = () => {
       setFormData({
         title: "",
         content: "",
+        user_id: user?.id,
       });
+      dispatch(GetBlogs());
     }
   };
 

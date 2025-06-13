@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { SignupThunk, SigninThunk, CheckAuth } from "../thunks/authThunks";
+import {
+  SignupThunk,
+  SigninThunk,
+  CheckAuth,
+  Logout,
+  GetUser,
+} from "../thunks/authThunks";
+import type { Session, User } from "@supabase/supabase-js";
 
 type InitialStateType = {
-  user: string | null;
-  session: any;
+  user: User | null;
+  session: Session | null;
   isSigningIn: boolean;
   isSigningUp: boolean;
   isChecking: boolean;
@@ -24,7 +31,11 @@ const initialState: InitialStateType = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearSession: (state) => {
+      state.session = null;
+    },
+  },
 
   extraReducers: (builder) => {
     // Sign up / Register
@@ -77,7 +88,26 @@ export const authSlice = createSlice({
       state.session = null;
       state.signinErr = "Sign up failed.";
     });
+
+    // Getting User
+    builder.addCase(GetUser.pending, (state) => {
+      state.isChecking = true;
+      state.user = null;
+      state.signinErr = null;
+    });
+    builder.addCase(GetUser.fulfilled, (state, action: any) => {
+      state.isChecking = false;
+      state.user = action.payload;
+      state.signinErr = null;
+    });
+    builder.addCase(GetUser.rejected, (state) => {
+      state.isChecking = false;
+      state.user = null;
+      state.signinErr = "Sign up failed.";
+    });
   },
 });
 
 export default authSlice.reducer;
+
+export const { clearSession } = authSlice.actions;

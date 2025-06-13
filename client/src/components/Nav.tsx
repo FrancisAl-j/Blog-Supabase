@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../redux/Hooks";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
+import { Logout } from "../redux/thunks/authThunks";
 
 const Nav = () => {
+  const dispatch = useAppDispatch();
   const { session } = useAppSelector((state) => state.auth);
+  console.log(session);
+
+  const handleLogout = () => {
+    dispatch(Logout());
+  };
 
   return (
     <header className="w-full">
@@ -19,7 +26,9 @@ const Nav = () => {
           </Link>
 
           {session ? (
-            <li className="text-red-600 cursor-pointer">Logout</li>
+            <li onClick={handleLogout} className="text-red-600 cursor-pointer">
+              Logout
+            </li>
           ) : (
             <Link to="signin">
               <li>Sign in</li>

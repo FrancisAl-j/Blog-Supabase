@@ -2,21 +2,44 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import CreateBlog from "./pages/CreateBlog";
-import { useAppDispatch } from "./redux/Hooks";
+import { useAppDispatch, useAppSelector } from "./redux/Hooks";
 import { GetBlogs } from "./redux/thunks/blogThunk";
 import Nav from "./components/Nav";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import { CheckAuth } from "./redux/thunks/authThunks";
+import { CheckAuth, GetUser } from "./redux/thunks/authThunks";
+import { supabase } from "./supabase-client";
+import { clearSession } from "./redux/reducers/authReducer";
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const { session, user } = useAppSelector((state) => state.auth);
+  const userId = user?.id;
+  console.log(userId);
+
   useEffect(() => {
     dispatch(GetBlogs());
     dispatch(CheckAuth());
+
+    // Check if there is changes in the session.
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!session) {
+          dispatch(clearSession());
+        }
+      }
+    );
+
+    //
+    return () => authListener.subscription.unsubscribe();
   }, [dispatch]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (session) {
+      dispatch(GetUser());
+    }
+  }, [dispatch, session]);
+
   return (
     <Router>
       <Nav />
