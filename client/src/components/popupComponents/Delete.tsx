@@ -10,6 +10,10 @@ const Delete = ({
   setBlogId: Dispatch<SetStateAction<number | null>>;
 }) => {
   const dispatch = useAppDispatch();
+
+  const page = 1;
+  const limit = 6;
+
   const cancelBtn = () => {
     setBlogId(null);
   };
@@ -18,7 +22,7 @@ const Delete = ({
     const result = await dispatch(DeleteBlog(id as number));
 
     if (DeleteBlog.fulfilled.match(result)) {
-      dispatch(GetBlogs());
+      dispatch(GetBlogs({ page, limit }));
     }
   };
   return (
