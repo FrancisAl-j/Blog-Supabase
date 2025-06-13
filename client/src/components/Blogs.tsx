@@ -47,7 +47,7 @@ const Blogs = () => {
                     <img
                       src={blog.image_url}
                       alt=""
-                      className="aspect-square w-full h-[200px] object-contain "
+                      className="aspect-square w-full h-[200px] object-cover "
                     />
                     <h1 className="blog-title font-bold text-[#2c2c2c]">
                       {blog.title}
