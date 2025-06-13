@@ -14,7 +14,7 @@ type BlogType = {
 const MyBlogs = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-  const { myBlogs } = useAppSelector((state) => state.blog);
+  const { myBlogs, gettingBlogs } = useAppSelector((state) => state.blog);
   const [blogId, setBlogId] = useState<null | number>(null);
   const [updateId, setUpdateId] = useState<null | number>(null);
 
@@ -29,8 +29,17 @@ const MyBlogs = () => {
   useEffect(() => {
     dispatch(GetMyBlogs(user?.id as string));
   }, [dispatch]);
+
+  if (gettingBlogs) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+      </div>
+    );
+  }
+
   return (
-    <main>
+    <main className="main-container">
       <h1 className="title font-extrabold">My Blogs</h1>
 
       <div className="px-5 flex flex-col gap-5 py-10">

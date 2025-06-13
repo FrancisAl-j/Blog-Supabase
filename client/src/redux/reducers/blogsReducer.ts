@@ -74,7 +74,7 @@ export const blogSlice = createSlice({
     });
     builder.addCase(GetBlogs.fulfilled, (state, action: any) => {
       state.blogs = action.payload.blogs;
-      state.total = action.payload.total; // ✅ Store total
+      state.total = action.payload.total;
       state.gettingBlogs = false;
     });
     builder.addCase(GetBlogs.rejected, (state) => {

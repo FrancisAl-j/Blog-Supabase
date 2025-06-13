@@ -82,7 +82,12 @@ const Nav = () => {
             </li>
           ) : (
             <Link to="signin">
-              <li>Sign in</li>
+              <li
+                onClick={hideNav}
+                className="text-green-600 cursor-pointer text-center p-4 sm:p-0 my-4 border-2 sm:border-0"
+              >
+                Sign in
+              </li>
             </Link>
           )}
         </ul>
