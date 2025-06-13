@@ -1,4 +1,6 @@
-import { useAppSelector } from "../redux/Hooks";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
+import { GetBlogs } from "../redux/thunks/blogThunk";
 
 type BlogType = {
   id: number;
@@ -9,7 +11,16 @@ type BlogType = {
 };
 
 const Blogs = () => {
-  const { blogs, gettingBlogs } = useAppSelector((state) => state.blog);
+  const dispatch = useAppDispatch();
+  const { blogs, gettingBlogs, total } = useAppSelector((state) => state.blog);
+  const [page, setPage] = useState(1);
+  const limit = 6;
+
+  const maxPage = Math.ceil(total / limit);
+
+  useEffect(() => {
+    dispatch(GetBlogs({ page, limit }));
+  }, [dispatch, page]);
 
   if (gettingBlogs) {
     return (
@@ -19,7 +30,7 @@ const Blogs = () => {
     );
   }
   return (
-    <main>
+    <main className="py-10">
       <h1 className="title text-[#2c2c2c] font-semibold">Blogs</h1>
       <div className="flex flex-wrap justify-center gap-2 py-6">
         {blogs &&
@@ -34,7 +45,7 @@ const Blogs = () => {
                   <img
                     src={blog.image_url}
                     alt=""
-                    className="aspect-square w-[350px] h-[200px] object-contain"
+                    className="aspect-square w-[350px] h-[200px] object-contain "
                   />
                   <h1 className="text-[#2c2c2c]">{blog.title}</h1>
                   <p className="text-[#2c2c2c]">{blog.content}</p>
@@ -42,6 +53,27 @@ const Blogs = () => {
               </div>
             );
           })}
+      </div>
+
+      {/* ✅ Pagination Controls */}
+      <div className="flex justify-center gap-4 mt-4 items-center">
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400c cursor-pointer"
+        >
+          Previous
+        </button>
+        <span className="text-[#2c2c2c]">
+          Page {page} of {maxPage}
+        </span>
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          disabled={page >= maxPage}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400 cursor-pointer"
+        >
+          Next
+        </button>
       </div>
     </main>
   );

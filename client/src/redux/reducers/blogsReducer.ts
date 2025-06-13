@@ -25,6 +25,7 @@ interface InitialState {
   error: string | null;
   deleteMessage: string | null;
   updateMessage: string | null;
+  total: number;
 }
 
 const initialState: InitialState = {
@@ -37,6 +38,7 @@ const initialState: InitialState = {
   error: null,
   deleteMessage: null,
   updateMessage: null,
+  total: 0,
 };
 
 export const blogSlice = createSlice({
@@ -68,9 +70,9 @@ export const blogSlice = createSlice({
       state.error = null;
     });
     builder.addCase(GetBlogs.fulfilled, (state, action: any) => {
+      state.blogs = action.payload.blogs;
+      state.total = action.payload.total; // ✅ Store total
       state.gettingBlogs = false;
-      state.blogs = action.payload;
-      state.error = null;
     });
     builder.addCase(GetBlogs.rejected, (state) => {
       state.gettingBlogs = false;

@@ -7,9 +7,20 @@ type FormDataType = {
   image_url: string | null;
 };
 
+type GetBlogsResponse = {
+  data: any[] | null;
+  total: number;
+};
+
 interface BlogsAPI {
   createBlog: (dataForm: FormDataType) => void;
-  getBlogs: () => void;
+  getBlogs: ({
+    page,
+    limit,
+  }: {
+    page: number;
+    limit: number;
+  }) => Promise<GetBlogsResponse>;
   deleteBlog: (id: number) => void;
   updateBlog: ({
     id,
@@ -32,14 +43,23 @@ export const blogs: BlogsAPI = {
     }
   },
 
-  getBlogs: async () => {
+  getBlogs: async ({
+    page = 1,
+    limit = 6,
+  }: {
+    page?: number;
+    limit?: number;
+  }): Promise<GetBlogsResponse> => {
     try {
+      const from = (page - 1) * limit;
+      const to = from + limit - 1;
       const res = await supabase
         .from("blogs")
-        .select("*")
-        .order("created_at", { ascending: true });
+        .select("*", { count: "exact" })
+        .order("created_at", { ascending: true })
+        .range(from, to);
 
-      return res.data;
+      return { data: res.data || [], total: res.count || 0 };
     } catch (error) {
       throw error;
     }

@@ -8,6 +8,11 @@ type FormDataType = {
   image_url: string | null;
 };
 
+type PageType = {
+  page: number;
+  limit: number;
+};
+
 export const CreateBlogPost = createAsyncThunk(
   "blog/create",
   async (dataForm: FormDataType, { rejectWithValue }) => {
@@ -25,11 +30,11 @@ export const CreateBlogPost = createAsyncThunk(
 
 export const GetBlogs = createAsyncThunk(
   "blog/get-all",
-  async (_, { rejectWithValue }) => {
+  async ({ page = 1, limit = 6 }: PageType, { rejectWithValue }) => {
     try {
-      const allBlogs = await blogs.getBlogs();
+      const { data, total } = await blogs.getBlogs({ page, limit });
 
-      return allBlogs;
+      return { blogs: data, total: total };
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message || "Fetching blog failed.");

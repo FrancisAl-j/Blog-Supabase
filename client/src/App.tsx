@@ -14,12 +14,12 @@ import MyBlogs from "./pages/MyBlogs";
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const { session, user } = useAppSelector((state) => state.auth);
-  const userId = user?.id;
-  console.log(userId);
+  const { session } = useAppSelector((state) => state.auth);
+  const page = 1;
+  const limit = 6;
 
   useEffect(() => {
-    dispatch(GetBlogs());
+    dispatch(GetBlogs({ page, limit }));
     dispatch(CheckAuth());
 
     // Check if there is changes in the session.
