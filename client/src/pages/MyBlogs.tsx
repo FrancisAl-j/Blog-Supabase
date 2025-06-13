@@ -33,16 +33,16 @@ const MyBlogs = () => {
     <main>
       <h1 className="title font-extrabold">My Blogs</h1>
 
-      <div className="px-5 flex flex-col gap-4">
+      <div className="px-5 flex flex-col gap-5 py-10">
         {myBlogs &&
           myBlogs.map((blog: BlogType, index: number) => {
             return (
               <div key={index}>
-                <div className="flex justify-between border-[#eee] border-2 items-center">
+                <div className="flex flex-col sm:flex-row justify-between border-[#eee] border-2 items-start sm:items-center gap-10 p-2">
                   <img
                     src={blog.image_url}
                     alt=""
-                    className="aspect-square w-[200px]"
+                    className="aspect-square w-full sm:w-[200px]"
                   />
 
                   <div>
@@ -50,7 +50,7 @@ const MyBlogs = () => {
                     <p>{blog.content.slice(0, 20)}...</p>
                   </div>
 
-                  <div className="flex flex-col justify-center px-5 gap-3">
+                  <div className="flex flex-row sm:flex-col w-full sm:w-auto justify-center px-5 gap-2">
                     <button
                       className="cursor-pointer bg-red-600 p-3"
                       onClick={() => getId(blog.id)}
