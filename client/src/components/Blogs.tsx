@@ -49,7 +49,9 @@ const Blogs = () => {
                       alt=""
                       className="aspect-square w-full h-[200px] object-contain "
                     />
-                    <h1 className="text-[#2c2c2c]">{blog.title}</h1>
+                    <h1 className="blog-title font-bold text-[#2c2c2c]">
+                      {blog.title}
+                    </h1>
                     <p className="text-[#2c2c2c]">
                       {blog.content.slice(0, 30)}...
                     </p>

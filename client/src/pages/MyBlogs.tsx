@@ -55,7 +55,7 @@ const MyBlogs = () => {
                   />
 
                   <div>
-                    <h1>{blog.title}</h1>
+                    <h1 className="blog-title font-bold">{blog.title}</h1>
                     <p>{blog.content.slice(0, 20)}...</p>
                   </div>
 

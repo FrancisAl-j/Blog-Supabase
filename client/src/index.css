@@ -8,6 +8,7 @@
   --form-label: clamp(1rem, 3vw, 2rem);
   --title: clamp(2.5rem, 5vw, 4rem);
   --logo: clamp(1.5rem, 3vw, 2rem);
+  --blog-title: clamp(1.2rem, 3vw, 2rem);
 }
 
 body {
@@ -35,4 +36,8 @@ body {
 
 .logo {
   font-size: var(--logo);
+}
+
+.blog-title {
+  font-size: var(--blog-title);
 }
