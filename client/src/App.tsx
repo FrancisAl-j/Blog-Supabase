@@ -11,6 +11,7 @@ import { CheckAuth, GetUser } from "./redux/thunks/authThunks";
 import { supabase } from "./supabase-client";
 import { clearSession } from "./redux/reducers/authReducer";
 import MyBlogs from "./pages/MyBlogs";
+import ViewBlog from "./pages/ViewBlog";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/blogs" element={<MyBlogs />} />
+          <Route path="/blog/:id" element={<ViewBlog />} />
         </Routes>
       </main>
     </Router>

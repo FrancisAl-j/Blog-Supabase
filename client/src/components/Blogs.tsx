@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { GetBlogs } from "../redux/thunks/blogThunk";
+import { Link } from "react-router-dom";
 
 type BlogType = {
   id: number;
@@ -41,15 +42,19 @@ const Blogs = () => {
                 key={index}
                 className="border-[#2c2c2c] border-2 w-[350px] cursor-pointer p-2 rounded-md"
               >
-                <div>
-                  <img
-                    src={blog.image_url}
-                    alt=""
-                    className="aspect-square w-[350px] h-[200px] object-contain "
-                  />
-                  <h1 className="text-[#2c2c2c]">{blog.title}</h1>
-                  <p className="text-[#2c2c2c]">{blog.content}</p>
-                </div>
+                <Link to={`/blog/${blog.id}`}>
+                  <div>
+                    <img
+                      src={blog.image_url}
+                      alt=""
+                      className="aspect-square w-full h-[200px] object-contain "
+                    />
+                    <h1 className="text-[#2c2c2c]">{blog.title}</h1>
+                    <p className="text-[#2c2c2c]">
+                      {blog.content.slice(0, 30)}...
+                    </p>
+                  </div>
+                </Link>
               </div>
             );
           })}

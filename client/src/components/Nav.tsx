@@ -16,7 +16,7 @@ const Nav = () => {
       <nav className="main-container flex justify-between py-4">
         <h1 className="logo font-extrabold">Francis Blog</h1>
 
-        <ul className="flex gap-5">
+        <ul className="flex gap-5 items-center">
           <Link to="/">
             <li>Home</li>
           </Link>

@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
-import { useAppDispatch } from "../../redux/Hooks";
-import { DeleteBlog, GetBlogs } from "../../redux/thunks/blogThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
+import { DeleteBlog, GetMyBlogs } from "../../redux/thunks/blogThunk";
 
 const Delete = ({
   id,
@@ -10,9 +10,7 @@ const Delete = ({
   setBlogId: Dispatch<SetStateAction<number | null>>;
 }) => {
   const dispatch = useAppDispatch();
-
-  const page = 1;
-  const limit = 6;
+  const { user } = useAppSelector((state) => state.auth);
 
   const cancelBtn = () => {
     setBlogId(null);
@@ -22,7 +20,8 @@ const Delete = ({
     const result = await dispatch(DeleteBlog(id as number));
 
     if (DeleteBlog.fulfilled.match(result)) {
-      dispatch(GetBlogs({ page, limit }));
+      dispatch(GetMyBlogs(user?.id as string));
+      setBlogId(null);
     }
   };
   return (

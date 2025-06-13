@@ -94,3 +94,18 @@ export const GetMyBlogs = createAsyncThunk(
     }
   }
 );
+
+export const GetBlog = createAsyncThunk(
+  "blog/one",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const blog = await blogs.getBlog(id);
+
+      return blog;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message || "Fetching blog failed.");
+      }
+    }
+  }
+);

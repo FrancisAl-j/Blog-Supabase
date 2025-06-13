@@ -4,8 +4,8 @@ import React, {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { useAppDispatch } from "../../redux/Hooks";
-import { GetBlogs, UpdateBlog } from "../../redux/thunks/blogThunk";
+import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
+import { GetMyBlogs, UpdateBlog } from "../../redux/thunks/blogThunk";
 
 type UpdateData = {
   title: string;
@@ -29,8 +29,7 @@ const Update = ({
     content: content || "",
   });
 
-  const page = 1;
-  const limit = 6;
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -47,7 +46,7 @@ const Update = ({
 
     if (UpdateBlog.fulfilled.match(result)) {
       setUpdateId(null);
-      dispatch(GetBlogs({ page, limit }));
+      dispatch(GetMyBlogs(user?.id as string));
     }
   };
 

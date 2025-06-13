@@ -29,6 +29,7 @@ interface BlogsAPI {
   deleteBlog: (id: number) => void;
   updateBlog: ({ id, formData }: { id: number; formData: UpdateData }) => void;
   getMyBlogs: (user_id: string) => void;
+  getBlog: (id: number) => void;
 }
 
 export const blogs: BlogsAPI = {
@@ -55,7 +56,7 @@ export const blogs: BlogsAPI = {
       const res = await supabase
         .from("blogs")
         .select("*", { count: "exact" })
-        .order("created_at", { ascending: true })
+        .order("created_at", { ascending: false })
         .range(from, to);
 
       return { data: res.data || [], total: res.count || 0 };
@@ -90,6 +91,20 @@ export const blogs: BlogsAPI = {
         .select("*")
         .eq("user_id", user_id)
         .order("created_at", { ascending: true });
+
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getBlog: async (id) => {
+    try {
+      const res = await supabase
+        .from("blogs")
+        .select("*")
+        .eq("id", id)
+        .single();
 
       return res.data;
     } catch (error) {

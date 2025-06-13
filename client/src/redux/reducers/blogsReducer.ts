@@ -5,6 +5,7 @@ import {
   DeleteBlog,
   UpdateBlog,
   GetMyBlogs,
+  GetBlog,
 } from "../thunks/blogThunk";
 
 type BlogType = {
@@ -16,6 +17,7 @@ type BlogType = {
 };
 
 interface InitialState {
+  blog: BlogType | null;
   myBlogs: BlogType[];
   blogs: BlogType[];
   isBlogLoading: boolean;
@@ -29,6 +31,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
+  blog: null,
   myBlogs: [],
   blogs: [],
   isBlogLoading: false,
@@ -128,6 +131,23 @@ export const blogSlice = createSlice({
     builder.addCase(GetMyBlogs.rejected, (state) => {
       state.gettingBlogs = false;
       state.myBlogs = [];
+      state.error = "Failed to create a blog.";
+    });
+
+    // Getting Single Blog
+    builder.addCase(GetBlog.pending, (state) => {
+      state.gettingBlogs = true;
+      state.blog = null;
+      state.error = null;
+    });
+    builder.addCase(GetBlog.fulfilled, (state, action: any) => {
+      state.gettingBlogs = false;
+      state.blog = action.payload;
+      state.error = null;
+    });
+    builder.addCase(GetBlog.rejected, (state) => {
+      state.gettingBlogs = false;
+      state.blog = null;
       state.error = "Failed to create a blog.";
     });
   },
