@@ -90,7 +90,12 @@ const CreateBlog = () => {
 
         <form onSubmit={handleSubmit} className="flex flex-col mt-20 gap-4 p-4">
           <div>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="text-[#2c2c2c] cursor-pointer"
+            />
           </div>
           <div className="flex flex-col">
             <span className="label text-[#2c2c2c]">Title</span>

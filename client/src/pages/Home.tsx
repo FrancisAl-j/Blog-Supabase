@@ -9,7 +9,7 @@ const Home = () => {
         </div>
       </section>
 
-      <div className="h-[100svh] bg-[#eeeeee]">
+      <div className=" bg-[#eeeeee]">
         <Blogs />
       </div>
     </main>

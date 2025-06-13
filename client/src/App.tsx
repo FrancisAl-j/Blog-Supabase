@@ -10,6 +10,7 @@ import Signin from "./pages/Signin";
 import { CheckAuth, GetUser } from "./redux/thunks/authThunks";
 import { supabase } from "./supabase-client";
 import { clearSession } from "./redux/reducers/authReducer";
+import MyBlogs from "./pages/MyBlogs";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/create-blog" element={<CreateBlog />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/blogs" element={<MyBlogs />} />
         </Routes>
       </main>
     </Router>

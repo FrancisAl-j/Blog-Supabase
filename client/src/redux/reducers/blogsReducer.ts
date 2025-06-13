@@ -4,16 +4,19 @@ import {
   GetBlogs,
   DeleteBlog,
   UpdateBlog,
+  GetMyBlogs,
 } from "../thunks/blogThunk";
 
 type BlogType = {
   id: number;
   title: string;
   content: string;
+  image_url: string;
   create_at?: Date;
 };
 
 interface InitialState {
+  myBlogs: BlogType[];
   blogs: BlogType[];
   isBlogLoading: boolean;
   gettingBlogs: boolean;
@@ -25,6 +28,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
+  myBlogs: [],
   blogs: [],
   isBlogLoading: false,
   gettingBlogs: false,
@@ -106,6 +110,23 @@ export const blogSlice = createSlice({
       state.isUpdating = false;
       state.updateMessage = null;
       state.error = "Failed to update a blog.";
+    });
+
+    // My Blogs
+    builder.addCase(GetMyBlogs.pending, (state) => {
+      state.gettingBlogs = true;
+      state.myBlogs = [];
+      state.error = null;
+    });
+    builder.addCase(GetMyBlogs.fulfilled, (state, action: any) => {
+      state.gettingBlogs = false;
+      state.myBlogs = action.payload;
+      state.error = null;
+    });
+    builder.addCase(GetMyBlogs.rejected, (state) => {
+      state.gettingBlogs = false;
+      state.myBlogs = [];
+      state.error = "Failed to create a blog.";
     });
   },
 });

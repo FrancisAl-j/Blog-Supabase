@@ -36,7 +36,3 @@ body {
 .logo {
   font-size: var(--logo);
 }
-
-* {
-  outline: 1px dotted red;
-}

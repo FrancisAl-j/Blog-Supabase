@@ -69,3 +69,18 @@ export const UpdateBlog = createAsyncThunk(
     }
   }
 );
+
+export const GetMyBlogs = createAsyncThunk(
+  "blog/get-myblog",
+  async (user_id: string, { rejectWithValue }) => {
+    try {
+      const myBlogs = await blogs.getMyBlogs(user_id);
+
+      return myBlogs;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message || "Fetching blog failed.");
+      }
+    }
+  }
+);

@@ -21,9 +21,17 @@ const Nav = () => {
             <li>Home</li>
           </Link>
 
-          <Link to="/create-blog">
-            <li>Create Blogs</li>
-          </Link>
+          {session && (
+            <Link to="/blogs">
+              <li>My Blogs</li>
+            </Link>
+          )}
+
+          {session && (
+            <Link to="/create-blog">
+              <li>Create Blogs</li>
+            </Link>
+          )}
 
           {session ? (
             <li onClick={handleLogout} className="text-red-600 cursor-pointer">
