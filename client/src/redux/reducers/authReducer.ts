@@ -3,7 +3,6 @@ import {
   SignupThunk,
   SigninThunk,
   CheckAuth,
-  Logout,
   GetUser,
 } from "../thunks/authThunks";
 import type { Session, User } from "@supabase/supabase-js";

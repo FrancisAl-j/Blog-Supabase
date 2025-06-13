@@ -3,10 +3,12 @@ import { supabase } from "../../supabase-client";
 type FormDataType = {
   title: string;
   content: string;
+  user_id: string | undefined;
+  image_url: string | null;
 };
 
 interface BlogsAPI {
-  createBlog: (formData: FormDataType) => void;
+  createBlog: (dataForm: FormDataType) => void;
   getBlogs: () => void;
   deleteBlog: (id: number) => void;
   updateBlog: ({
@@ -19,9 +21,9 @@ interface BlogsAPI {
 }
 
 export const blogs: BlogsAPI = {
-  createBlog: async (formData: FormDataType) => {
+  createBlog: async (dataForm: FormDataType) => {
     try {
-      const res = await supabase.from("blogs").insert(formData);
+      const res = await supabase.from("blogs").insert(dataForm);
 
       return res.data;
     } catch (error) {

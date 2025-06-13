@@ -4,13 +4,15 @@ import { blogs } from "../api/blogsAPI";
 type FormDataType = {
   title: string;
   content: string;
+  user_id: string | undefined;
+  image_url: string | null;
 };
 
 export const CreateBlogPost = createAsyncThunk(
   "blog/create",
-  async (formData: FormDataType, { rejectWithValue }) => {
+  async (dataForm: FormDataType, { rejectWithValue }) => {
     try {
-      const blog = await blogs.createBlog(formData);
+      const blog = await blogs.createBlog(dataForm);
 
       return blog;
     } catch (error) {
