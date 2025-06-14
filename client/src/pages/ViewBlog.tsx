@@ -16,7 +16,7 @@ const ViewBlog = () => {
   }, [dispatch, id]);
   return (
     <main className="main-container">
-      <div>
+      <div className="p-10">
         {blog && (
           <div className="flex flex-col gap-10">
             <img src={blog?.image_url} alt="" className="aspect-[4/2]" />
