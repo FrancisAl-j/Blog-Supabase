@@ -23,7 +23,9 @@ const CreateBlog = () => {
   const page = 1;
   const limit = 6;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -91,8 +93,9 @@ const CreateBlog = () => {
           Create Blog
         </h1>
 
-        <form onSubmit={handleSubmit} className="flex flex-col mt-20 gap-4 p-4">
+        <form onSubmit={handleSubmit} className="flex flex-col mt-10 gap-4 p-4">
           <div>
+            <span className="label text-[#2c2c2c]">Choose a Header Image</span>
             <input
               type="file"
               accept="image/*"
@@ -113,13 +116,13 @@ const CreateBlog = () => {
 
           <div className="flex flex-col">
             <span className="label text-[#2c2c2c]">Content</span>
-            <input
-              type="text"
+            <textarea
               name="content"
+              rows={3}
               value={formData.content}
               onChange={handleChange}
               className="border-black border-2 text-[#2c2c2c] p-2 rounded-md"
-            />
+            ></textarea>
           </div>
 
           <button className="label bg-[#2c2c2c] cursor-pointer rounded-md mt-10 hover:bg-[#eeeeee] hover:text-[#2c2c2c] border-[#2c2c2c] border-2">

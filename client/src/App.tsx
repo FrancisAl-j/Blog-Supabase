@@ -12,6 +12,7 @@ import { supabase } from "./supabase-client";
 import { clearSession } from "./redux/reducers/authReducer";
 import MyBlogs from "./pages/MyBlogs";
 import ViewBlog from "./pages/ViewBlog";
+import Footer from "./components/Footer";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/blog/:id" element={<ViewBlog />} />
         </Routes>
       </main>
+      <Footer />
     </Router>
   );
 };

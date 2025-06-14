@@ -31,7 +31,9 @@ const Update = ({
 
   const { user } = useAppSelector((state) => state.auth);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -74,13 +76,13 @@ const Update = ({
 
           <div className="flex flex-col">
             <span className="label text-[#2c2c2c]">Content</span>
-            <input
-              type="text"
+            <textarea
               name="content"
+              rows={3}
               value={formData.content}
               onChange={handleChange}
               className="border-black border-2 text-[#2c2c2c] p-2 rounded-md"
-            />
+            ></textarea>
           </div>
 
           <div className="mt-10 flex gap-3">
