@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { GetMyBlogs } from "../redux/thunks/blogThunk";
 import Delete from "../components/popupComponents/Delete";
 import Update from "../components/popupComponents/Update";
+import { CheckAuth, GetUser } from "../redux/thunks/authThunks";
 type BlogType = {
   id: number;
   title: string;
@@ -27,8 +28,15 @@ const MyBlogs = () => {
   };
 
   useEffect(() => {
-    dispatch(GetMyBlogs(user?.id as string));
+    dispatch(CheckAuth());
+    dispatch(GetUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(GetMyBlogs(user.id as string));
+    }
+  }, [dispatch, user]);
 
   if (gettingBlogs) {
     return (
