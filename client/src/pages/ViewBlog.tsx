@@ -8,12 +8,12 @@ const ViewBlog = () => {
   const { blog } = useAppSelector((state) => state.blog);
   const { id } = useParams();
   const numericId = Number(id);
-  console.log(blog);
 
   useEffect(() => {
     if (!id) return;
     dispatch(GetBlog(numericId));
   }, [dispatch, id]);
+
   return (
     <main className="main-container">
       <div className="p-10">
