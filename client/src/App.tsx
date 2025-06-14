@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import CreateBlog from "./pages/CreateBlog";
 import { useAppDispatch, useAppSelector } from "./redux/Hooks";
@@ -49,9 +54,18 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create-blog" element={<CreateBlog />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route
+            path="/create-blog"
+            element={session ? <CreateBlog /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/signup"
+            element={session ? <Navigate to="/" /> : <Signup />}
+          />
+          <Route
+            path="/signin"
+            element={session ? <Navigate to="/" /> : <Signin />}
+          />
           <Route path="/blogs" element={<MyBlogs />} />
           <Route path="/blog/:id" element={<ViewBlog />} />
         </Routes>

@@ -25,8 +25,9 @@ const Nav = () => {
   return (
     <header className="w-full relative">
       <nav className="main-container flex justify-between py-4">
-        <h1 className="logo font-extrabold">Francis Blog</h1>
-
+        <Link to="/">
+          <h1 className="logo font-extrabold">Francis Blog</h1>
+        </Link>
         <ul
           className={`${
             isShow ? "block" : "hidden"
@@ -91,7 +92,6 @@ const Nav = () => {
             </Link>
           )}
         </ul>
-
         <img
           onClick={showNav}
           src={Menu}
